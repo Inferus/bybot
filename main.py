@@ -9,6 +9,7 @@ from queue import Queue
 
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
 logger = logging.getLogger(__name__)
+SCAN_INTERVAL_SEC = 300
 session = HTTP(
     testnet=False,
     api_key=os.getenv("API_KEY"),
@@ -34,7 +35,7 @@ def compare_tickers(users_q):
 
         if (len(tickers) == 0):
             tickers = new_tickers
-            time.sleep(900)
+            time.sleep(SCAN_INTERVAL_SEC)
         message = ""
         for ticker in tickers:
             for new_ticker in new_tickers:
@@ -49,7 +50,7 @@ def compare_tickers(users_q):
                 except Exception as e:
                     logger.error("Error sending message", e)
         tickers = new_tickers
-        time.sleep(900)
+        time.sleep(SCAN_INTERVAL_SEC)
 
 thread = threading.Thread(target=compare_tickers, args=(users_queue,))
 thread.daemon = True  # Allows the program to exit even if this thread is still running
