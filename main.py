@@ -32,7 +32,7 @@ def compare_tickers(users_q):
 
         new_tickers_unfiltered = session.get_tickers(category="linear")["result"]["list"]
         new_tickers = [item for item in new_tickers_unfiltered if "USDT" in item["symbol"]]
-
+        logger.info("Requesing tickers")
         if (len(tickers) == 0):
             tickers = new_tickers
             time.sleep(SCAN_INTERVAL_SEC)
