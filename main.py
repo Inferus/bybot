@@ -55,7 +55,7 @@ def compare_tickers(users_q):
 thread = threading.Thread(target=compare_tickers, args=(users_queue,))
 thread.daemon = True  # Allows the program to exit even if this thread is still running
 thread.start()
-
+ 
 @bot.message_handler(commands=['start', 'hello'])
 def register(message):
     if (users.count(message.from_user.id) == 0):
@@ -63,11 +63,8 @@ def register(message):
         bot.send_message(message.chat.id, "<b>Welcome to OICryptoScan! \n\n🌟</b> OICryptoScan is your go-to assistant for timely updates on the open interest of various cryptocurrencies.\n\nEvery 15 minutes, we provide signals on rising or falling open interest, helping you make informed trading decisions in real-time.\n\nOICryptoScan is completely <b>free</b> and exists and thrives solely because of the generous donations from users like you\n\n<b>TRC-USDT:</b> <code>TWkdkf8Pbz4jDgUikmrjBmVudRVBCAq1mA</code> (tap to copy)\n\n<b>BSC:</b> <code>0x7a4525ef6a59f9877b2f371e7861168227c40743</code> (tap to copy)\n\n🚀 From now on you will recieve open interest updates!\n\nYou will recieve your first update in less than <b>15 minutes</b>", parse_mode="HTML")
         users_queue.put(users)
 
-def start_polling():
-    bot.polling()
 try:
-    start_polling()
+    bot.polling(non_stop=True)
 except Exception as e:
     logger.error("Error polling telegram")
-    start_polling()
 
