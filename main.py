@@ -64,7 +64,7 @@ def register(message):
         users_queue.put(users)
 
 try:
-    bot.polling(non_stop=True)
+    bot.infinity_polling()
 except Exception as e:
     logger.error("Error polling telegram")
 
